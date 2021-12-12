@@ -47,7 +47,7 @@ public class CallBlocker extends BroadcastReceiver {
 		}
 		var telecomManager = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
 		if (telecomManager != null && telecomManager.endCall()) {
-			Toast.makeText(context, "Call from "+phoneNumber+" blocked.", Toast.LENGTH_LONG)
+			Toast.makeText(context, "Blocked a call from "+phoneNumber, Toast.LENGTH_LONG)
 					.show();
 		}
 	}
