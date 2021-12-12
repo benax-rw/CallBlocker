@@ -9,12 +9,22 @@ import android.telecom.TelecomManager;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
+import java.util.Arrays;
+
 public class CallBlocker extends BroadcastReceiver {
-
-	private static boolean isUnwanted(String phoneNumber) {
-		return phoneNumber.contains("079") || phoneNumber.contains("078") || phoneNumber.contains("073") || phoneNumber.contains("072") || phoneNumber == null || phoneNumber.isEmpty();
+	private static boolean isWhiteListed(String phoneNumber) {
+		boolean val = false;
+		String[] whitelist = {
+				"0788301945", //Jean Claude, NGA
+				"0788548000", //Dr. Papias, RCA
+				"0791255485", //Gabriel-Super-Private
+				"0783070801" //DalYoung-Public
+		};
+		if (Arrays.asList(whitelist).contains(phoneNumber)) {
+			val=true;
+		}
+		return val;
 	}
-
 	@SuppressWarnings({"deprecation", "RedundantSuppression"})
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -34,7 +44,7 @@ public class CallBlocker extends BroadcastReceiver {
 		}
 		var phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
 
-		if (!isUnwanted(phoneNumber)) {
+		if (isWhiteListed(phoneNumber)) {
 			return; //Return means don't block it!
 		}
 		if (!context.getSharedPreferences(MainActivity.SHARED_PREFERENCES, Context.MODE_PRIVATE)
@@ -47,7 +57,7 @@ public class CallBlocker extends BroadcastReceiver {
 		}
 		var telecomManager = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
 		if (telecomManager != null && telecomManager.endCall()) {
-			Toast.makeText(context, "Call from "+phoneNumber+" blocked.", Toast.LENGTH_LONG)
+			Toast.makeText(context, "Blocked a call from "+phoneNumber, Toast.LENGTH_LONG)
 					.show();
 		}
 	}
