@@ -1,4 +1,4 @@
-package ilchev.stefan.callblocker;
+package rw.benax.callblocker;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 public class CallBlocker extends BroadcastReceiver {
 
-	private static boolean isPrivateNumber(String phoneNumber) {
-		return phoneNumber == null || phoneNumber.isEmpty();
+	private static boolean isUnwanted(String phoneNumber) {
+		return phoneNumber.contains("079") || phoneNumber.contains("078") || phoneNumber.contains("073") || phoneNumber.contains("072") || phoneNumber == null || phoneNumber.isEmpty();
 	}
 
 	@SuppressWarnings({"deprecation", "RedundantSuppression"})
@@ -33,8 +33,9 @@ public class CallBlocker extends BroadcastReceiver {
 			return;
 		}
 		var phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-		if (!isPrivateNumber(phoneNumber)) {
-			return;
+
+		if (!isUnwanted(phoneNumber)) {
+			return; //Return means don't block it!
 		}
 		if (!context.getSharedPreferences(MainActivity.SHARED_PREFERENCES, Context.MODE_PRIVATE)
 				.getBoolean(MainActivity.IS_ENABLED, MainActivity.IS_ENABLED_DEFAULT)) {
@@ -46,7 +47,7 @@ public class CallBlocker extends BroadcastReceiver {
 		}
 		var telecomManager = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
 		if (telecomManager != null && telecomManager.endCall()) {
-			Toast.makeText(context, R.string.app_name, Toast.LENGTH_LONG)
+			Toast.makeText(context, "Call from "+phoneNumber+" blocked.", Toast.LENGTH_LONG)
 					.show();
 		}
 	}

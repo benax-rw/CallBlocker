@@ -1,4 +1,4 @@
-package ilchev.stefan.callblocker;
+package rw.benax.callblocker;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
