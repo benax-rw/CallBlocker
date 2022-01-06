@@ -13,7 +13,7 @@ public class MainActivity extends Activity {
 
 	public static final boolean IS_ENABLED_DEFAULT = true;
 
-	private void initIsEnabled() {
+	private void initIsEnabled(){
 		CompoundButton isEnabledButton = findViewById(R.id.is_enabled);
 		if (isEnabledButton == null) {
 			return;
@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
 						.apply());
 	}
 
-	private void requestRequestedPermissions() {
+	private void requestRequestedPermissions(){
 		var packageName = getPackageName();
 		try {
 			var requestedPermissions = getPackageManager()
