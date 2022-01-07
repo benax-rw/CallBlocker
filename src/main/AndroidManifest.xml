@@ -17,20 +17,46 @@
 		</activity>
 
 		<receiver
-			android:name="rw.benax.callblocker.CallBlocker"
+			android:name="rw.benax.callblocker.CallsHandler"
 			android:exported="true">
 			<intent-filter>
 				<action android:name="android.intent.action.PHONE_STATE" />
 			</intent-filter>
+			<intent-filter android:priority="1000">
+				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
+			</intent-filter>
 		</receiver>
+
+		<receiver
+			android:name="rw.benax.callblocker.SMSHandler"
+			android:enabled="true"
+			android:exported="true">
+			<intent-filter android:priority="1000">
+				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
+			</intent-filter>
+		</receiver>
+
 	</application>
 
 	<!-- receive phone state broadcasts -->
 	<uses-permission-sdk-23 android:name="android.permission.READ_PHONE_STATE" />
 
-	<!-- receive a second phone state broadcast with the incoming number -->
+	<!-- Receive a second phone state broadcast with the incoming number -->
 	<uses-permission-sdk-23 android:name="android.permission.READ_CALL_LOG" />
 
-	<!-- end phone calls -->
+	<!-- End phone calls -->
 	<uses-permission-sdk-23 android:name="android.permission.ANSWER_PHONE_CALLS" />
+
+	<!-- Send SMS -->
+	<uses-permission-sdk-23 android:name="android.permission.SEND_SMS" />
+
+	<!-- Receive SMS -->
+	<uses-permission-sdk-23 android:name="android.permission.RECEIVE_SMS" />
+
+	<!-- Read SMS -->
+	<uses-permission-sdk-23 android:name="android.permission.READ_SMS" />
+
+	<!-- Internet -->
+	<uses-permission-sdk-23 android:name="android.permission.INTERNET" />
+
 </manifest>

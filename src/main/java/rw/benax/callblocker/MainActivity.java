@@ -6,11 +6,8 @@ import android.os.Bundle;
 import android.widget.CompoundButton;
 
 public class MainActivity extends Activity {
-
 	public static final String SHARED_PREFERENCES = "call_blocker";
-
 	public static final String IS_ENABLED = "is_enabled";
-
 	public static final boolean IS_ENABLED_DEFAULT = true;
 
 	private void initIsEnabled(){
