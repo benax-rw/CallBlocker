@@ -1,11 +1,11 @@
-package rw.benax.callblocker.api;
+package rw.benax.offguard.api;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import rw.benax.callblocker.Model;
+import rw.benax.offguard.Model;
 
 public interface APIInterface {
     @GET("api.php")

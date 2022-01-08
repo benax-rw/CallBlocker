@@ -1,4 +1,4 @@
-package rw.benax.callblocker.api;
+package rw.benax.offguard.api;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

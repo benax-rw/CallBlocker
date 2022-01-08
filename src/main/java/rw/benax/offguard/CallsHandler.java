@@ -1,4 +1,4 @@
-package rw.benax.callblocker;
+package rw.benax.offguard;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -12,28 +12,19 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Arrays;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import rw.benax.callblocker.api.APIClient;
-import rw.benax.callblocker.api.APIInterface;
-
 public class CallsHandler extends BroadcastReceiver{
-	private static final String TAG = "Event Handling";
+	private final String[] whitelist = {
+			"0788301945", //Jean Claude, NGA
+			"0788548000", //Dr. Papias, RCA
+			"0791255485", //Gabriel-Super-Private
+			"0783070801" //DalYoung-Public
+	};
+	private boolean val = false; //Shouldn't be final because it will be assigned values locally (== withing a method)
 
-	private static boolean isWhiteListed(String phoneNumber) {
-		boolean val = false;
-		String[] whitelist = {
-				"0788301945", //Jean Claude, NGA
-				"0788548000", //Dr. Papias, RCA
-				"0791255485", //Gabriel-Super-Private
-				"0783070801" //DalYoung-Public
-		};
-		if (Arrays.asList(whitelist).contains(phoneNumber)) {
+	private boolean isWhiteListed(String phoneNumber) {
+		if (Arrays.asList(this.whitelist).contains(phoneNumber)) {
 			val=true;
 		}
 		return val;
@@ -66,13 +57,6 @@ public class CallsHandler extends BroadcastReceiver{
 			return;
 		}
 
-		var phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-
-		if (isWhiteListed(phoneNumber)){
-			Model.reportEvent(phoneNumber, "Received a call from "+phoneNumber+".", context);
-			return; //Return means don't block it!
-		}
-
 		if (!context.getSharedPreferences(MainActivity.SHARED_PREFERENCES, Context.MODE_PRIVATE)
 				.getBoolean(MainActivity.IS_ENABLED, MainActivity.IS_ENABLED_DEFAULT)) {
 			return;
@@ -83,11 +67,22 @@ public class CallsHandler extends BroadcastReceiver{
 					.show();
 		}
 
+		var phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+		var TAG = "Event Handling";
+		var owner = "BAZIRAMWABO Gabriel";
+
+		if (isWhiteListed(phoneNumber)){
+			Model.reportEvent(owner, "Received a call from "+phoneNumber+".", context);
+			Log.d(TAG, "Received a call from "+phoneNumber+".");
+			return; //Return means don't block it!
+		}
+
 		var telecomManager = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
 		if (telecomManager != null && telecomManager.endCall()) {
 			Toast.makeText(context, "Blocked a call from " + phoneNumber, Toast.LENGTH_LONG).show();
 			sendSMS(phoneNumber, "Hello.\nI am currently unable to answer your call.\nCan you rather send me an SMS?", context);
-			Model.reportEvent(phoneNumber, "Blocked a call from " + phoneNumber + ".", context);
+			Model.reportEvent(owner, "Blocked a call from " + phoneNumber + ".", context);
+			Log.d(TAG, "Blocked a call from "+phoneNumber+".");
 		}
 	}
 }

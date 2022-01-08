@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name" translatable="false">Call Blocker</string>
+	<string name="app_name" translatable="false">OffGuard</string>
     <string name="enable_call_blocking">Enable Call Blocking</string>
 </resources>
