@@ -1,4 +1,4 @@
-# Benax CallBlocker
-Call Blocker for Android
+# OffGuard
+Manages Incoming Calls and SMSes.
 
-This app blocks calls for set numbers!
+OffGuard doesn't simply block calls it also automatically and intelligently replies to a caller.
