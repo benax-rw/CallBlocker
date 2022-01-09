@@ -6,31 +6,49 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.telecom.TelecomManager;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CallsHandler extends BroadcastReceiver{
-	private final String[] whitelist = {
-			"0788301945", //Jean Claude, NGA
-			"0788548000", //Dr. Papias, RCA
-			"0791255485", //Gabriel-Super-Private
-			"0783070801" //DalYoung-Public
-	};
+	private SQLiteDatabase dataBase;
 	private boolean val = false; //Shouldn't be final because it will be assigned values locally (== withing a method)
 
-	private boolean isWhiteListed(String phoneNumber) {
-		if (Arrays.asList(this.whitelist).contains(phoneNumber)) {
+	@SuppressLint("Range")
+	private boolean isWhiteListed(String phoneNumber, Context context){
+		String[] whitelistArray = {};
+		List<String> whitelist = new ArrayList<>();
+
+		this.dataBase = new DBHandler(context).getWritableDatabase();
+		Cursor cursor = this.dataBase.rawQuery(String.format("SELECT * FROM %s", DBHandler.TBL_WHITELIST), null);
+		if (cursor.moveToFirst()){
+			do {
+				whitelist.add(cursor.getString(cursor.getColumnIndex(DBHandler.col_phone_number)));
+			}
+			while(cursor.moveToNext());
+		}
+		cursor.close();
+		//this.dataBase.close();
+
+		// Convert the Arraylist back to array
+		whitelistArray = whitelist.toArray(whitelistArray);
+
+		Log.d("MyTAG", whitelistArray[0]);
+
+		if (Arrays.asList(whitelistArray).contains(phoneNumber)) {
 			val=true;
 		}
 		return val;
 	}
 
-	@SuppressLint({"ResourceAsColor", "SetTextI18n"})
 	public void sendSMS(String phone, String SMS, Context context){
 		SmsManager smsManager = SmsManager.getDefault();
 		smsManager.sendMultipartTextMessage(phone,null,smsManager.divideMessage(SMS),null,null);
@@ -71,7 +89,7 @@ public class CallsHandler extends BroadcastReceiver{
 		var TAG = "Event Handling";
 		var owner = "BAZIRAMWABO Gabriel";
 
-		if (isWhiteListed(phoneNumber)){
+		if (isWhiteListed(phoneNumber, context)){
 			Model.reportEvent(owner, "Received a call from "+phoneNumber+".", context);
 			Log.d(TAG, "Received a call from "+phoneNumber+".");
 			return; //Return means don't block it!

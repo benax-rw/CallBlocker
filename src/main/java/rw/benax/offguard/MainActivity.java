@@ -1,14 +1,39 @@
 package rw.benax.offguard;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.CompoundButton;
 
 public class MainActivity extends Activity {
 	public static final String SHARED_PREFERENCES = "call_blocker";
 	public static final String IS_ENABLED = "is_enabled";
 	public static final boolean IS_ENABLED_DEFAULT = true;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		initIsEnabled();
+		requestRequestedPermissions();
+
+		Button btnLinkToAdd = findViewById(R.id.btnLinkToNewWhitelist);
+		btnLinkToAdd.setOnClickListener(view -> {
+			Intent i = new Intent(getApplicationContext(), AddToWhitelist.class);
+			startActivity(i);
+			//finish();
+		});
+
+		Button btnLinkToView = findViewById(R.id.btnLinkToViewWhitelist);
+		btnLinkToView.setOnClickListener(view -> {
+			Intent i = new Intent(getApplicationContext(), ViewWhitelist.class);
+			startActivity(i);
+			//finish();
+		});
+
+	}
 
 	private void initIsEnabled(){
 		CompoundButton isEnabledButton = findViewById(R.id.is_enabled);
@@ -37,13 +62,5 @@ public class MainActivity extends Activity {
 			}
 		} catch (PackageManager.NameNotFoundException ignore) {
 		}
-	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		initIsEnabled();
-		requestRequestedPermissions();
 	}
 }

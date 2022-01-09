@@ -20,10 +20,10 @@ public class Model {
         api = APIClient.getClient("https://smser.benax.rw/").create(APIInterface.class);
         try {
             Call<Model> call = api.uploadSMS(source, msg);
-            call.enqueue(new Callback<Model>(){
+            call.enqueue(new Callback<>() {
                 @Override
                 public void onResponse(@NotNull Call<Model> call, @NotNull Response<Model> response) {
-                    Log.d("TAG",response.code()+"");
+                    Log.d("TAG", response.code() + "");
                 }
 
                 @Override

@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name" translatable="false">OffGuard</string>
+    <string name="app_name" translatable="false">OffGuard</string>
     <string name="enable_call_blocking">Enable Call Blocking</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_register">Register</string>
+    <string name="btn_link_to_register">Not a member? Register now.</string>
+    <string name="btn_link_to_login">Already registered? Login</string>
+    <string name="settings">Logout</string>
+    <string name="hint_phone">Phone</string>
+    <string name="contact_person">Contact Person</string>
+    <string name="title_activity_view_whitelist">ViewWhitelist</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

@@ -1,6 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/is_enabled"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:text="@string/enable_call_blocking" />
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddToWhitelist">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="50dp"
+            android:text="Why OffGuard app?"
+            android:textFontWeight="700"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/subheader"
+            android:textSize="17dp"
+            android:textFontWeight="500"
+            android:layout_width="wrap_content"
+            android:textColor="#313237"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="5dp"
+            android:text="That time you feel you can't tolerate any disturbance.\nThat's when OffGuard app comes in handy!" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="#313237"/>
+
+            <CheckBox
+                android:id="@+id/is_enabled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="#294327"
+                android:textSize="18dp"
+                android:text="@string/enable_call_blocking" />
+
+            <Button
+                android:id="@+id/btnLinkToNewWhitelist"
+                android:padding="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:text="+New Number"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="#294327"
+                android:textSize="18dp" />
+
+            <Button
+                android:id="@+id/btnLinkToViewWhitelist"
+                android:padding="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:text="- View &amp; Remove"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="#294327"
+                android:textSize="18dp" />
+        </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
